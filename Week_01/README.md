@@ -283,7 +283,7 @@ wrk  -c 100 -t 20 -d 60s http://localhost:8088/api/hello
 
 执行4次压测得出结果
 
-[测试结果](https://www.notion.so/fea49d9f12c548a3a863d620dc5202e2)
+[测试结果](测试结果.png)
 
 由于测试时间较少,并且是在本地电脑.数据不一定正确.但是也能从表格中看出,
 
