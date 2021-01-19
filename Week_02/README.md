@@ -152,3 +152,8 @@ Transfer/sec:      4.36MB
 ### Serial
 
 作为最早的回收器对于大内存已经不堪重负,内存过于大后整体的效率也会下降
+
+## 第四课地址
+1.（选做）运行课上的例子，以及 Netty 的例子，分析相关现象。
+2.（必做）写一段代码，使用 HttpClient 或 OkHttp 访问 http://localhost:8801 ，代码提交到 Github。
+[作业跳转](GeekTime-Work4)
