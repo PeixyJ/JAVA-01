@@ -157,3 +157,4 @@ Transfer/sec:      4.36MB
 1.（选做）运行课上的例子，以及 Netty 的例子，分析相关现象。
 2.（必做）写一段代码，使用 HttpClient 或 OkHttp 访问 http://localhost:8801 ，代码提交到 Github。
 [作业跳转](GeekTime-Work4)
+>在Bigsur情况下,使用wrk进行测试10s后将会导致Mac死机
