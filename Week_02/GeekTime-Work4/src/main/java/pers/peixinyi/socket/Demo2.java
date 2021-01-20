@@ -1,7 +1,6 @@
-package pers.peixinyi.netty;
+package pers.peixinyi.socket;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 

@@ -1,4 +1,4 @@
-package pers.peixinyi.netty;
+package pers.peixinyi.socket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
