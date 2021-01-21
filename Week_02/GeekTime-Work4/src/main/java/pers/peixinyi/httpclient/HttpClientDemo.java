@@ -23,8 +23,8 @@ public class HttpClientDemo {
     public static void main(String[] args) {
         //得到一个浏览器
         CloseableHttpClient request = HttpClientBuilder.create().build();
-//        HttpGet get = new HttpGet("http://www.baidu.com");
-        HttpGet get = new HttpGet("http://127.0.0.1:8801");
+        HttpGet get = new HttpGet("http://www.baidu.com");
+//        HttpGet get = new HttpGet("http://127.0.0.1:8801");
         CloseableHttpResponse response = null;
 
         try {
