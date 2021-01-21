@@ -11,18 +11,16 @@ import pers.peixinyi.utils.InvokingHttp;
  * @Author: PeiXy
  * @Date: 2021-01-21 14:58
  */
-public class OneRouter implements CustomRouter {
-
-    @Override
-    public void router(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
-        String path = fullRequest.uri().substring(getPrefix().length());
-        String realUrl = LoadBalancing.loopAddress(getAddress()) + "/" + path;
-        writeResponse(fullRequest,ctx,InvokingHttp.invoking(fullRequest.method().name(), realUrl), HttpResponseStatus.OK);
-    }
+public class BaiduRouter implements CustomRouter {
 
     @Override
     public String getPrefix() {
         return "/baidu/";
+    }
+
+    @Override
+    public Boolean removePrefix() {
+        return true;
     }
 
     @Override

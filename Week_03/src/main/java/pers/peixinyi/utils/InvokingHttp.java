@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 public class InvokingHttp {
     /**
      * TODO 请求记得传参数
+     *
      * @param method
      * @param url
      * @return
@@ -38,6 +39,7 @@ public class InvokingHttp {
     }
 
     public static String get(CloseableHttpClient request, String url) {
+        System.out.println("当前访问地址为:" + url);
         HttpGet get = new HttpGet(url);
         CloseableHttpResponse response = null;
         try {
@@ -47,10 +49,9 @@ public class InvokingHttp {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("我做了关闭操作");
             try {
-                response.close();
                 request.close();
+                response.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -5,6 +5,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
 import pers.peixinyi.router.load.RatioAddress;
+import pers.peixinyi.utils.InvokingHttp;
 
 import java.util.List;
 
@@ -30,8 +31,16 @@ public interface CustomRouter {
      * @version 1.0.0.0
      * @since 14:48 2021/1/21
      */
-    void router(FullHttpRequest fullRequest, ChannelHandlerContext ctx);
-
+    default void router(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
+        String path;
+        if (removePrefix()) {
+            path = fullRequest.uri().substring(getPrefix().length());
+        } else {
+            path = fullRequest.uri();
+        }
+        String realUrl = LoadBalancing.loopAddress(getAddress()) + "/" + path;
+        writeResponse(fullRequest, ctx, InvokingHttp.invoking(fullRequest.method().name(), realUrl), HttpResponseStatus.OK);
+    }
     /**
      * <p> url前缀 </p>
      *
@@ -41,6 +50,16 @@ public interface CustomRouter {
      * @since 14:50 2021/1/21
      */
     String getPrefix();
+
+    /**
+     * <p> 是否删除前缀 </p>
+     *
+     * @return java.lang.Boolean
+     * @author PeiXy
+     * @version 1.0.0.0
+     * @since 22:28 2021/1/21
+     */
+    Boolean removePrefix();
 
     String[] getAddress();
 

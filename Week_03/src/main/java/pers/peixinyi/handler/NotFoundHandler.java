@@ -3,10 +3,7 @@ package pers.peixinyi.handler;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpUtil;
+import io.netty.handler.codec.http.*;
 import pers.peixinyi.router.CustomRouter;
 import pers.peixinyi.router.load.RatioAddress;
 
@@ -50,6 +47,11 @@ public class NotFoundHandler implements CustomRouter {
     }
 
     @Override
+    public Boolean removePrefix() {
+        return false;
+    }
+
+    @Override
     public String[] getAddress() {
         return new String[0];
     }
@@ -58,4 +60,5 @@ public class NotFoundHandler implements CustomRouter {
     public RatioAddress[] getRatioAddress() {
         return new RatioAddress[0];
     }
+
 }
