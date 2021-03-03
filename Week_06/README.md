@@ -96,23 +96,23 @@ create table goods
 ) comment '商品信息' charset 'utf8mb4';
 /**创建订单信息表**/
 drop table orders;
-create table orders
-(
-    id               int auto_increment comment 'id' primary key,
-    consumer_id      int comment '消费者id',
-    countries        varchar(32)  default '' comment '国家',
-    provinces        varchar(32)  default '' comment '省',
-    city             varchar(32)  default '' comment '市',
-    area             varchar(64)  default '' comment '区',
-    detail           varchar(255) default '' comment '详细地址',
-    order_amount     int          default 0 comment '订单总价/分',
-    logistics_fees   int          default 0 comment '订单总价/分',
-    logistics_status varchar(64)  default '' comment '物流状态',
-    order_status     int(1)       default 0 comment '0未付款,-1关闭,1已付款,2已发货,3已签收,4以退款'， update_time timestamp comment '修改时间',
-    update_time      timestamp comment '修改时间',
-    create_time      timestamp comment '创建时间',
-    note             varchar(64)  default '' comment '备注'
-) comment '商品信息' charset 'utf8mb4';
+CREATE TABLE `orders` (
+  `id` varchar(64) NOT NULL,
+  `consumer_id` int DEFAULT NULL COMMENT '消费者id',
+  `countries` varchar(32) DEFAULT '' COMMENT '国家',
+  `provinces` varchar(32) DEFAULT '' COMMENT '省',
+  `city` varchar(32) DEFAULT '' COMMENT '市',
+  `area` varchar(64) DEFAULT '' COMMENT '区',
+  `detail` varchar(255) DEFAULT '' COMMENT '详细地址',
+  `order_amount` int DEFAULT '0' COMMENT '订单总价/分',
+  `logistics_fees` int DEFAULT '0' COMMENT '订单总价/分',
+  `logistics_status` int DEFAULT '0' COMMENT '物流状态',
+  `order_status` int DEFAULT '0' COMMENT '0未付款,-1关闭,1已付款,2已发货,3已签收,4以退款',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `note` varchar(64) DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='商品信息'
 /**创建订单商品关联表**/
 drop table orders_goods;
 create table orders_goods
