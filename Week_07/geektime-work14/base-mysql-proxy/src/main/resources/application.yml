@@ -1,0 +1,9 @@
+datasource:
+  master:
+    url: jdbc:mysql://192.168.10.155:3306/geektime
+    username: root
+    password: 123456
+  slaves:
+    - url: jdbc:mysql://localhost:3306/week_time
+      username: root
+      password: 123456
