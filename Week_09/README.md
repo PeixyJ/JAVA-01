@@ -22,10 +22,12 @@
 
 
 
-[*] 尝试将服务端写死查找接口实现类变成泛型和反射 
+<input type='checkbox' onclick='return false;' checked>尝试将服务端写死查找接口实现类变成泛型和反射 
 [Week_09/geektime-work17/rpcfx-core/src/main/java/io/kimmking/rpcfx/server/RpcfxInvoker.java](Week_09/geektime-work17/rpcfx-core/src/main/java/io/kimmking/rpcfx/server/RpcfxInvoker.java)
-[ ] 尝试将客户端动态代理改成AOP，添加异常处理 (未理解)
-[ ] 尝试使用Netty+HTTP作为client端传输方式 (未做)
+
+<input type='checkbox' onclick='return false;'> 尝试将客户端动态代理改成AOP，添加异常处理 (未理解)
+
+<input type='checkbox' onclick='return false;'> 尝试使用Netty+HTTP作为client端传输方式 (未做)
 
 
 ## Work18
