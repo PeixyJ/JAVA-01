@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: business-system
   datasource:
     url: jdbc:mysql://192.168.10.155:3356/db2
     username: root

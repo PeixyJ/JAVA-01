@@ -41,6 +41,6 @@ public interface FreezeMoneyService {
      * @param status
      * @return
      */
-    FreezeMoney getFreeMoney(int userID, int orderID, int status);
+    FreezeMoney getFreeMoneyStats(int userID, int orderID, int status);
 
 }

@@ -40,7 +40,7 @@ public class FreezeMoneyServiceImpl implements FreezeMoneyService {
 
     @Override
     @ChangeDB
-    public FreezeMoney getFreeMoney(int userID, int orderID, int status) {
+    public FreezeMoney getFreeMoneyStats(int userID, int orderID, int status) {
         return freezeMoneyMapper.getFreezeMoneyStatus(userID, orderID, status);
     }
 }

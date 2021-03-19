@@ -1,6 +1,7 @@
 package pers.peixinyi.business.service;
 
 import org.apache.dubbo.config.annotation.DubboReference;
+
 import org.dromara.hmily.annotation.HmilyTCC;
 import org.dromara.hmily.common.exception.HmilyRuntimeException;
 import org.slf4j.Logger;
@@ -133,6 +134,7 @@ public class ForexOrderServiceImpl implements ForexOrderService {
 
 
     @Override
+    @HmilyTCC(confirmMethod = "confirmBuyOrder", cancelMethod = "cancelBuyOrder")
     public Boolean buyOrder(ForexOrder forexOrder) {
 
         int buyUser = forexOrder.getBuyUserId();
@@ -187,34 +189,8 @@ public class ForexOrderServiceImpl implements ForexOrderService {
         return transfer(forexOrder);
     }
 
-    public Boolean confirmBuyOrder(ForexOrder forexOrder) {
-        System.out.println("1111");
-        logger.info("开始转账->{},{}", forexOrder.getBuyUserId(), forexOrder.getConsignmentUserId());
-        return true;
-    }
 
-    public Boolean cancelBuyOrder(ForexOrder forexOrder) {
-        System.out.println("2222");
-        logger.info("触发回滚操作->cancelBuyOrder");
-        FreezeMoney buyFreezeMoney = freezeMoneyService.getFreeMoney(forexOrder.getBuyUserId(), forexOrder.getOrderId(), 99);
-        //判断买家用户是否操作
-        if (buyFreezeMoney != null) {
-            minusMoney(forexOrder.getBuyUserId(), forexOrder.getCurrencyType(), forexOrder.getCurrency(), -1);
-            freezeMoneyService.updateFreezeMoneyStatus(forexOrder.getBuyUserId(), forexOrder.getOrderId(), -1);
-        } else {
-            //因为buy都没有成功那么 sell也不会进行操作
-            return true;
-        }
-        FreezeMoney sellFreezeMoney = freezeMoneyService.getFreeMoney(forexOrder.getConsignmentUserId(), forexOrder.getOrderId(), 99);
-        //判断买家用户是否操作
-        if (sellFreezeMoney != null) {
-            minusMoney(forexOrder.getConsignmentUserId(), forexOrder.getTargetType(), buyFreezeMoney.getCurrency(), -1);
-            freezeMoneyService.updateFreezeMoneyStatus(forexOrder.getConsignmentUserId(), forexOrder.getOrderId(), -1);
-        }
-        return true;
-    }
-
-    @HmilyTCC(confirmMethod = "confirmBuyOrder", cancelMethod = "cancelBuyOrder")
+    @Override
     public Boolean transfer(ForexOrder forexOrder) {
         //获取冻结信息
         FreezeMoney buyFreezeMoney = freezeMoneyService.getFreezeMoney(forexOrder.getBuyUserId(), forexOrder.getOrderId());
@@ -235,6 +211,43 @@ public class ForexOrderServiceImpl implements ForexOrderService {
         return true;
     }
 
+    @Override
+    public Boolean confirmBuyOrder(ForexOrder forexOrder) {
+        System.out.println("1111");
+        logger.info("开始转账->{},{}", forexOrder.getBuyUserId(), forexOrder.getConsignmentUserId());
+        return true;
+    }
+
+    @Override
+    public Boolean cancelBuyOrder(ForexOrder forexOrder) {
+        System.out.println("2222");
+        logger.info("触发回滚操作->cancelBuyOrder");
+
+        forexOrder = forexOrderMapper.selectByPrimaryKey(forexOrder.getId());
+        forexOrder.setStatus(-99);
+        forexOrderMapper.updateByPrimaryKeySelective(forexOrder);
+        if (forexOrder == null) {
+            logger.info("没有该订单 -> forexOrder.getId()");
+            return false;
+        }
+
+        FreezeMoney buyFreezeMoney = freezeMoneyService.getFreeMoneyStats(forexOrder.getBuyUserId(), forexOrder.getOrderId(), 99);
+        //判断买家用户是否操作
+        if (buyFreezeMoney != null) {
+            minusMoney(forexOrder.getBuyUserId(), forexOrder.getCurrencyType(), forexOrder.getCurrency(), -1);
+            freezeMoneyService.updateFreezeMoneyStatus(forexOrder.getBuyUserId(), forexOrder.getOrderId(), 0);
+        } else {
+            //因为buy都没有成功那么 sell也不会进行操作
+            return true;
+        }
+        FreezeMoney sellFreezeMoney = freezeMoneyService.getFreeMoneyStats(forexOrder.getConsignmentUserId(), forexOrder.getOrderId(), 99);
+        //判断买家用户是否操作
+        if (sellFreezeMoney != null) {
+            minusMoney(forexOrder.getConsignmentUserId(), forexOrder.getTargetType(), buyFreezeMoney.getCurrency(), -1);
+            freezeMoneyService.updateFreezeMoneyStatus(forexOrder.getConsignmentUserId(), forexOrder.getOrderId(), 0);
+        }
+        return true;
+    }
 
     @Override
     public Boolean updateOrderStatus(int id, ForexOrderStatus forexOrderStatus) {

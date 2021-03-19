@@ -1,6 +1,7 @@
 package pers.peixinyi.business;
 
 import org.dromara.hmily.annotation.Hmily;
+import org.dromara.hmily.annotation.HmilyTCC;
 import pers.peixinyi.account.Account;
 import pers.peixinyi.business.status.ForexOrderStatus;
 
@@ -63,6 +64,16 @@ public interface ForexOrderService {
      * @return
      */
     Boolean updateOrderStatus(int id, ForexOrderStatus forexOrderStatus);
+
+    @Hmily
+    Boolean transfer(ForexOrder forexOrder);
+
+    @Hmily
+    Boolean confirmBuyOrder(ForexOrder forexOrder);
+
+    @Hmily
+    Boolean cancelBuyOrder(ForexOrder forexOrder);
+
 
     /**
      * @param id
