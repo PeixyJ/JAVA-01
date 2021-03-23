@@ -71,11 +71,11 @@ public final class Rpcfx {
             // mock == true, new Student("hubao");
 
             RpcfxRequest request = new RpcfxRequest();
-            request.setServiceClass(this.serviceClass.getName());
+            request.setServiceClass(this.serviceClass);
             request.setMethod(method.getName());
             request.setParams(params);
 
-            if (null!=filters) {
+            if (null != filters) {
                 for (Filter filter : filters) {
                     if (!filter.filter(request)) {
                         return null;
@@ -83,7 +83,7 @@ public final class Rpcfx {
                 }
             }
 
-            RpcfxResponse response = post(request, url);
+            RpcfxResponse response = new NettyClient().post(request, url);
 
             // 加filter地方之三
             // Student.setTeacher("cuijing");
@@ -96,7 +96,7 @@ public final class Rpcfx {
 
         private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {
             String reqJson = JSON.toJSONString(req);
-            System.out.println("req json: "+reqJson);
+            System.out.println("req json: " + reqJson);
 
             // 1.可以复用client
             // 2.尝试使用httpclient或者netty client
@@ -106,7 +106,7 @@ public final class Rpcfx {
                     .post(RequestBody.create(JSONTYPE, reqJson))
                     .build();
             String respJson = client.newCall(request).execute().body().string();
-            System.out.println("resp json: "+respJson);
+            System.out.println("resp json: " + respJson);
             return JSON.parseObject(respJson, RpcfxResponse.class);
         }
     }
