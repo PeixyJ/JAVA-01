@@ -15,8 +15,8 @@
 ## Work24
 
 1、(必做)搭建ActiveMQ服务，基于JMS，写代码分别实现对于queue和topic的消息 生产和消费，代码提交到github。
-[Queue操作](Week_12/geektime-work24/src/main/java/pers/hongdenglv/RunApplication.java)
-[Topic操作](Week_12/geektime-work24/src/main/java/pers/hongdenglv/RunApplicationTopic.java)
+[Queue操作](geektime-work24/src/main/java/pers/hongdenglv/RunApplication.java)
+[Topic操作](geektime-work24/src/main/java/pers/hongdenglv/RunApplicationTopic.java)
 
 
 2、(选做)基于数据库的订单表，模拟消息队列处理订单: 1)一个程序往表里写新订单，标记状态为未处理(status=0);
